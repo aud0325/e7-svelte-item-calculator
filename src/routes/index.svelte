@@ -93,7 +93,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 		currentElement.blur();
 		requestAnimationFrame(() => {
 			// element.focus();
-			(element || currentElement).select();
+			(element || currentElement).focus();
 		})
 	}
 	else if (e.code === 'KeyT') {
@@ -104,9 +104,15 @@ const handleKeyup = (e: KeyboardEvent) => {
 	if (e.code === 'MetaRight') isCmdPressed = false;
 }
 
+const selectOnFocus = (e: FocusEvent) => {
+	(e.target as HTMLInputElement)?.select();
+}
+
 $: sum = Object.keys(stat)
 .map((key) => stat[key] * statWeight[key])
 .reduce((cur, val) => cur + val);
+
+const round2decimal = (num: number) => Math.round(num * 100) / 100
 
 let isShowShortcut = false;
 const toggleShortcut = () => isShowShortcut = !isShowShortcut;
@@ -114,62 +120,100 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 </script>
 
 <svelte:window on:keydown= {handleKeydown} on:keyup= {handleKeyup}/>
+<svelte:head>
+	<title>Turam's e7 calculator</title>
+	<meta name="description" content="에픽세븐 템 점수계산기"/>
+</svelte:head>
+
 
 <Container class="text-center">
 	<Row>
 		<Col>
 			<Label for="atkPer">공격력%<Shortcut value="Q" show={ isShowShortcut }/></Label>
-			<Input type="number" name="atkPer" bind:value={stat.atkPer} bind:inner = { elAtkPer }/>
+			<Input type="number" name="atkPer"
+				on:focus={ selectOnFocus }
+				bind:value={stat.atkPer}
+				bind:inner = { elAtkPer }/>
 		</Col>
 		<Col>
 			<Label for="hpPer">체력%<Shortcut value="W" show={ isShowShortcut }/></Label>
-			<Input type="number" name="hpPer" bind:value={stat.hpPer} bind:inner = {elHpPer}/>
+			<Input type="number" name="hpPer"
+				on:focus={ selectOnFocus }
+				bind:value={stat.hpPer}
+				bind:inner = {elHpPer}/>
 		</Col>
 		<Col>
 			<Label for="defPer">방어력%<Shortcut value="E" show={ isShowShortcut }/></Label>
-			<Input type="number" name="defPer" bind:value={stat.defPer} bind:inner = {elDefPer}/>
+			<Input type="number" name="defPer"
+				on:focus={ selectOnFocus }
+				bind:value={stat.defPer}
+				bind:inner = {elDefPer}/>
 		</Col>
 	</Row>
 	<Row>
 		<Col>
 			<Label for="atk">공격력<Shortcut value="A" show={ isShowShortcut }/></Label>
-			<Input type="number" name="atk" bind:value={stat.atk} bind:inner = {elAtk}/>
+			<Input type="number" name="atk"
+				on:focus={ selectOnFocus }
+				bind:value={stat.atk}
+				bind:inner = {elAtk}/>
 		</Col>
 		<Col>
 			<Label for="hp">체력<Shortcut value="S" show={ isShowShortcut }/></Label>
-			<Input type="number" name="hp" bind:value={stat.hp} bind:inner = {elHp}/>
+			<Input type="number" name="hp"
+				on:focus={ selectOnFocus }
+				bind:value={stat.hp}
+				bind:inner = {elHp}/>
 		</Col>
 		<Col>
 			<Label for="def">방어력<Shortcut value="D" show={ isShowShortcut }/></Label>
-			<Input type="number" name="def" bind:value={stat.def} bind:inner = {elDef}/>
+			<Input type="number" name="def"
+				on:focus={ selectOnFocus }
+				bind:value={stat.def}
+				bind:inner = {elDef}/>
 		</Col>
 	</Row>
 	<Row>
 		<Col>
 			<Label for="spd">속도<Shortcut value="Z" show={ isShowShortcut }/></Label>
-			<Input type="number" name="spd" bind:value={stat.spd} bind:inner = {elSpd}/>
+			<Input type="number" name="spd"
+				on:focus={ selectOnFocus }
+				bind:value={stat.spd}
+				bind:inner = {elSpd}/>
 		</Col>
 		<Col>
 			<Label for="cri">치확<Shortcut value="X" show={ isShowShortcut }/></Label>
-			<Input type="number" name="cri" bind:value={stat.cri} bind:inner = {elCri}/>
+			<Input type="number" name="cri"
+				on:focus={ selectOnFocus }
+				bind:value={stat.cri}
+				bind:inner = {elCri}/>
 		</Col>
 		<Col>
 			<Label for="criDmg">치피<Shortcut value="C" show={ isShowShortcut }/></Label>
-			<Input type="number" name="criDmg" bind:value={stat.criDmg} bind:inner = {elCriDmg}/>
+			<Input type="number" name="criDmg"
+				on:focus={ selectOnFocus }
+				bind:value={stat.criDmg}
+				bind:inner = {elCriDmg}/>
 		</Col>
 	</Row>
 	<Row>
 		<Col>
 			<Label for="eff">효적<Shortcut value="V" show={ isShowShortcut }/></Label>
-			<Input type="number" name="eff" bind:value={stat.eff} bind:inner = {elEff}/>
+			<Input type="number" name="eff"
+				on:focus={ selectOnFocus }
+				bind:value={stat.eff}
+				bind:inner = {elEff}/>
 		</Col>
 		<Col>
 			<Label for="res">효저<Shortcut value="B" show={ isShowShortcut }/></Label>
-			<Input type="number" name="res" bind:value={stat.res} bind:inner = {elRes}/>
+			<Input type="number" name="res"
+				on:focus={ selectOnFocus }
+				bind:value={stat.res}
+				bind:inner = {elRes}/>
 		</Col>
 		<Col>
 			<Label>점수</Label>
-			<div> { sum } </div>
+			<div> { round2decimal(sum) } </div>
 		</Col>
 	</Row>
 	<Row>
