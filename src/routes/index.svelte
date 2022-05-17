@@ -1,22 +1,10 @@
 <script lang="ts">
-import { onMount, SvelteComponentTyped, tick } from "svelte";
+import { onMount, } from "svelte";
 import { Button, Container, Col, Input, Label, Row } from "sveltestrap";
-import Shortcut from "../lib/ShortcutLabel.svelte";
-
-interface Stat {
-	[index:string]: number
-	atkPer: number
-	hpPer: number
-	defPer: number
-	atk: number
-	hp: number
-	def: number
-	spd: number
-	cri: number
-	criDmg: number
-	eff: number
-	res: number
-}
+import Shortcut from "$lib/ShortcutLabel.svelte";
+import ItemAnalyzer from "$lib/ItemAnalyzer.svelte";
+import type { Stat } from "../type/index";
+import { StatWeight, round2decimal } from "../lib/stat";
 
 const stat = <Stat>{
 	atkPer: 0,
@@ -30,19 +18,6 @@ const stat = <Stat>{
 	criDmg: 0,
 	eff: 0,
 	res: 0,
-}
-const statWeight = <Stat>{
-	atkPer: 1,
-	hpPer: 1,
-	defPer: 1,
-	atk: (3.46 / 39),
-	hp: (3.09 / 174),
-	def: (4.99 / 31),
-	spd: 2,
-	cri: 1.6,
-	criDmg: (8/7),
-	eff: 1,
-	res: 1,
 }
 
 let elAtkPer: HTMLInputElement | undefined = undefined;
@@ -82,7 +57,7 @@ let isCmdPressed = false;
 const handleKeydown = (e: KeyboardEvent) => {
 	if (e.code === 'MetaRight') isCmdPressed = true;
 	if (isCmdPressed) return;
-
+	
 	console.log(e);
 	console.log('keydown', e.code, e.keyCode, e.which, keyMap[e.code]);
 	const element = keyMap[e.code];
@@ -109,10 +84,8 @@ const selectOnFocus = (e: FocusEvent) => {
 }
 
 $: sum = Object.keys(stat)
-.map((key) => stat[key] * statWeight[key])
+.map((key) => stat[key] * StatWeight[key])
 .reduce((cur, val) => cur + val);
-
-const round2decimal = (num: number) => Math.round(num * 100) / 100
 
 let isShowShortcut = false;
 const toggleShortcut = () => isShowShortcut = !isShowShortcut;
@@ -136,7 +109,7 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 				bind:inner = { elAtkPer }/>
 		</Col>
 		<Col>
-			<Label for="hpPer">체력%<Shortcut value="W" show={ isShowShortcut }/></Label>
+			<Label for="hpPer">생명력%<Shortcut value="W" show={ isShowShortcut }/></Label>
 			<Input type="number" name="hpPer"
 				on:focus={ selectOnFocus }
 				bind:value={stat.hpPer}
@@ -159,7 +132,7 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 				bind:inner = {elAtk}/>
 		</Col>
 		<Col>
-			<Label for="hp">체력<Shortcut value="S" show={ isShowShortcut }/></Label>
+			<Label for="hp">생명력<Shortcut value="S" show={ isShowShortcut }/></Label>
 			<Input type="number" name="hp"
 				on:focus={ selectOnFocus }
 				bind:value={stat.hp}
@@ -219,5 +192,10 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 	<Row>
 		<Col><Button on:click={ reset }>리셋</Button></Col>
 		<Col><Button on:click={ toggleShortcut }>단축키 보기</Button></Col>
+	</Row>
+	<Row>
+		<Col>
+			<ItemAnalyzer stat={stat}/>
+		</Col>
 	</Row>
 </Container>
