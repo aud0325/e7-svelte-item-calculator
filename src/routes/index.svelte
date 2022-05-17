@@ -194,8 +194,6 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 		<Col><Button on:click={ toggleShortcut }>단축키 보기</Button></Col>
 	</Row>
 	<Row>
-		<Col>
-			<ItemAnalyzer stat={stat}/>
-		</Col>
+		<ItemAnalyzer stat={stat}/>
 	</Row>
 </Container>

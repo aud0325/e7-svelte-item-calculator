@@ -3,6 +3,24 @@
     import { MaxStats, StatWeight, round2decimal } from "./stat";
 
     export let stat: Stat;
+    const onStatChanged = (st: Stat) => {
+        isRankFocused = false;
+        isUpgradeFocused = false;
+    }
+    // 스탯 바뀔때마다 등급/강화횟수 초기화
+    $: onStatChanged(stat);
+
+    let rank = 0;
+    let isRankFocused = false;
+    let upgrade = 0;
+    let isUpgradeFocused = false;
+
+    const onRankFocus = () => {
+        isRankFocused = true;
+    };
+    const onUpgradeFocus = () => {
+        isUpgradeFocused = true;
+    }
 
     $: calcData = () => {
         let rollCnt = 0;
@@ -16,11 +34,14 @@
             console.log(key, val);
             if (val > 0) {
                 modCnt++;
-                rollCnt += Math.ceil(val/maxVal);
+                const curRollCnt = Math.ceil(val/maxVal);
+                rollCnt += curRollCnt;
                 score += weight * val;
-                maxScore += weight * (maxVal * rollCnt);
+                maxScore += weight * (maxVal * curRollCnt);
             }
         });
+
+        // TODO rank와 upgrade로 분기 세팅?
 
         if (modCnt > 5) {
             return 'ERROR 입력된 값이 5개가 넘습니다.';
@@ -38,15 +59,27 @@
         } else {
             rollCntMessage = '85렙 이상 15강 전설템 기준';
         }
-        const message = '점수: ' + round2decimal(score) + ' / 최대점수: ' + round2decimal(maxScore) + ' (' + round2decimal(score/maxScore) + '%) 점수의 아이템이에요.';
+        const message = '점수: ' + round2decimal(score) + ' / 최대점수: ' + round2decimal(maxScore) + ' (' + round2decimal((score/maxScore)*100) + '%) 점수의 아이템이에요.';
 
         return `${rollCntMessage}
         ${message}
-        (강화점수가 낮으면 최대점수가 낮게 보일 수 있습니다. 최대 점수에 8을 더해주세요.)`;
+        (강화 단계가 다르면 왼쪽에서 조정해주세요)`;
     };
 
 </script>
 
-<div style="white-space:pre-wrap">
-    {calcData()}
-</div>
+// <Col>
+//     <Label for="rank">등급</Label>
+//     <Input type="number" name="rank"
+//         on:focus={ onRankFocus }
+//         bind:value={rank}/>
+//     <Label for="upgrade">강화단계</Label>
+//     <Input type="number" name="upgrade"
+//         on:focus={ onUpgradeFocus }
+//         bind:value={upgrade}/>
+// </Col>
+<Col>
+    <div style="white-space:pre-wrap">
+        {calcData()}
+    </div>
+</Col>
