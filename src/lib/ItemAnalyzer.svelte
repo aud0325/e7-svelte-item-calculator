@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Row } from "sveltestrap";
     import type { Stat } from "../type/index";
     import { MaxStats, StatWeight, round2decimal } from "./stat";
 
