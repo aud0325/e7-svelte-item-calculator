@@ -18,7 +18,7 @@
                 modCnt++;
                 rollCnt += Math.ceil(val/maxVal);
                 score += weight * val;
-                maxScore += weight * maxVal;
+                maxScore += weight * (maxVal * rollCnt);
             }
         });
 
@@ -26,7 +26,9 @@
             return 'ERROR 입력된 값이 5개가 넘습니다.';
         }
         let rollCntMessage = '';
-        if (rollCnt < 4) {
+        if (rollCnt < 3) {
+            return '3개 이상의 옵션을 넣어주세요';
+        } else if (rollCnt < 4) {
             rollCntMessage = '85레벨 노강 영웅템 기준';
         } else if ( rollCnt === 4) {
             rollCntMessage = '85레벨 노강 전설템 / 3강 영웅템 기준'
@@ -36,11 +38,11 @@
         } else {
             rollCntMessage = '85렙 이상 15강 전설템 기준';
         }
-        const message = round2decimal(score) + '/' + round2decimal(maxScore) + ' (' + round2decimal(score/maxScore) + '%) 점수의 아이템이에요.';
+        const message = '점수: ' + round2decimal(score) + ' / 최대점수: ' + round2decimal(maxScore) + ' (' + round2decimal(score/maxScore) + '%) 점수의 아이템이에요.';
 
         return `${rollCntMessage}
         ${message}
-        (만약 3강이 적게 보인다면, 최대 점수에 8점을 더하세요)`;
+        (강화점수가 낮으면 최대점수가 낮게 보일 수 있습니다. 최대 점수에 8을 더해주세요.)`;
     };
 
 </script>

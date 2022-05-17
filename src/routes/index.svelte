@@ -55,7 +55,7 @@ onMount(() => {
 });
 let isCmdPressed = false;
 const handleKeydown = (e: KeyboardEvent) => {
-	if (e.code === 'MetaRight') isCmdPressed = true;
+	if (e.code === 'MetaRight' || e.code === 'ControlLeft ') isCmdPressed = true;
 	if (isCmdPressed) return;
 	
 	console.log(e);
