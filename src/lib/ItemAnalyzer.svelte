@@ -66,8 +66,6 @@
         (강화 단계가 다르면 왼쪽에서 조정해주세요)`;
     };
 
-</script>
-
 // <Col>
 //     <Label for="rank">등급</Label>
 //     <Input type="number" name="rank"
@@ -78,6 +76,8 @@
 //         on:focus={ onUpgradeFocus }
 //         bind:value={upgrade}/>
 // </Col>
+</script>
+
 <Col>
     <div style="white-space:pre-wrap">
         {calcData()}
