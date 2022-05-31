@@ -3,21 +3,22 @@ import { onMount, } from "svelte";
 import { Button, Container, Col, Input, Label, Row } from "sveltestrap";
 import Shortcut from "$lib/ShortcutLabel.svelte";
 import ItemAnalyzer from "$lib/ItemAnalyzer.svelte";
-import type { Stat } from "../type/index";
-import { StatWeight, round2decimal } from "../lib/stat";
+import StatInput from "$lib/StatInput.svelte";
+import type { Stat } from "$type/index";
+import { StatWeight, round2decimal, getStatName } from "$lib/stat";
 
 const stat = <Stat>{
 	atkPer: 0,
 	hpPer: 0,
 	defPer: 0,
+	eff: 0,
+	res: 0,
 	atk: 0,
 	hp: 0,
 	def: 0,
-	spd: 0,
 	cri: 0,
 	criDmg: 0,
-	eff: 0,
-	res: 0,
+	spd: 0,
 }
 
 let elAtkPer: HTMLInputElement | undefined = undefined;
@@ -62,6 +63,11 @@ const handleKeydown = (e: KeyboardEvent) => {
 	console.log('keydown', e.code, e.keyCode, e.which, keyMap[e.code]);
 	const element = keyMap[e.code];
 	const currentElement = (document.activeElement as HTMLInputElement);
+
+	if (e.code === 'KeyT') {
+		reset();
+	}
+
 	if (element || e.keyCode === 229) {
 		e.preventDefault();
 		// for composition language(like korean) make blur and focus
@@ -71,16 +77,9 @@ const handleKeydown = (e: KeyboardEvent) => {
 			(element || currentElement).focus();
 		})
 	}
-	else if (e.code === 'KeyT') {
-		reset();
-	}
 }
 const handleKeyup = (e: KeyboardEvent) => {
 	if (e.code === 'MetaRight') isCmdPressed = false;
-}
-
-const selectOnFocus = (e: FocusEvent) => {
-	(e.target as HTMLInputElement)?.select();
 }
 
 $: sum = Object.keys(stat)
@@ -102,87 +101,87 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 <Container class="text-center">
 	<Row>
 		<Col>
-			<Label for="atkPer">공격력%<Shortcut value="Q" show={ isShowShortcut }/></Label>
-			<Input type="number" name="atkPer"
-				on:focus={ selectOnFocus }
-				bind:value={stat.atkPer}
-				bind:inner = { elAtkPer }/>
+			<StatInput id="atkPer"
+					shortcut="Q"
+					bind:isShowShortcut={isShowShortcut}
+					bind:value={stat.atkPer}
+					bind:inner={elAtkPer}/>
 		</Col>
 		<Col>
-			<Label for="hpPer">생명력%<Shortcut value="W" show={ isShowShortcut }/></Label>
-			<Input type="number" name="hpPer"
-				on:focus={ selectOnFocus }
-				bind:value={stat.hpPer}
-				bind:inner = {elHpPer}/>
+			<StatInput id="hpPer"
+					shortcut="W"
+					bind:isShowShortcut={isShowShortcut}
+					bind:value={stat.hpPer}
+					bind:inner={elHpPer}/>
 		</Col>
 		<Col>
-			<Label for="defPer">방어력%<Shortcut value="E" show={ isShowShortcut }/></Label>
-			<Input type="number" name="defPer"
-				on:focus={ selectOnFocus }
-				bind:value={stat.defPer}
-				bind:inner = {elDefPer}/>
-		</Col>
-	</Row>
-	<Row>
-		<Col>
-			<Label for="atk">공격력<Shortcut value="A" show={ isShowShortcut }/></Label>
-			<Input type="number" name="atk"
-				on:focus={ selectOnFocus }
-				bind:value={stat.atk}
-				bind:inner = {elAtk}/>
-		</Col>
-		<Col>
-			<Label for="hp">생명력<Shortcut value="S" show={ isShowShortcut }/></Label>
-			<Input type="number" name="hp"
-				on:focus={ selectOnFocus }
-				bind:value={stat.hp}
-				bind:inner = {elHp}/>
-		</Col>
-		<Col>
-			<Label for="def">방어력<Shortcut value="D" show={ isShowShortcut }/></Label>
-			<Input type="number" name="def"
-				on:focus={ selectOnFocus }
-				bind:value={stat.def}
-				bind:inner = {elDef}/>
+			<StatInput id="defPer"
+					shortcut="E"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.defPer}
+					bind:inner={elDefPer}/>
 		</Col>
 	</Row>
 	<Row>
 		<Col>
-			<Label for="spd">속도<Shortcut value="Z" show={ isShowShortcut }/></Label>
-			<Input type="number" name="spd"
-				on:focus={ selectOnFocus }
-				bind:value={stat.spd}
-				bind:inner = {elSpd}/>
+			<StatInput id="atk"
+					shortcut="A"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.atk}
+					bind:inner={elAtk}/>
 		</Col>
 		<Col>
-			<Label for="cri">치확<Shortcut value="X" show={ isShowShortcut }/></Label>
-			<Input type="number" name="cri"
-				on:focus={ selectOnFocus }
-				bind:value={stat.cri}
-				bind:inner = {elCri}/>
+			<StatInput id="hp"
+					shortcut="S"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.hp}
+					bind:inner={elHp}/>
 		</Col>
 		<Col>
-			<Label for="criDmg">치피<Shortcut value="C" show={ isShowShortcut }/></Label>
-			<Input type="number" name="criDmg"
-				on:focus={ selectOnFocus }
-				bind:value={stat.criDmg}
-				bind:inner = {elCriDmg}/>
+			<StatInput id="def"
+					shortcut="D"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.def}
+					bind:inner={elDef}/>
 		</Col>
 	</Row>
 	<Row>
 		<Col>
-			<Label for="eff">효적<Shortcut value="V" show={ isShowShortcut }/></Label>
-			<Input type="number" name="eff"
-				on:focus={ selectOnFocus }
-				bind:value={stat.eff}
-				bind:inner = {elEff}/>
+			<StatInput id="spd"
+					shortcut="Z"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.spd}
+					bind:inner={elSpd}/>
 		</Col>
 		<Col>
-			<Label for="res">효저<Shortcut value="B" show={ isShowShortcut }/></Label>
-			<Input type="number" name="res"
-				on:focus={ selectOnFocus }
-				bind:value={stat.res}
-				bind:inner = {elRes}/>
+			<StatInput id="cri"
+					shortcut="X"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.cri}
+					bind:inner={elCri}/>
+		</Col>
+		<Col>
+			<StatInput id="criDmg"
+					shortcut="C"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.criDmg}
+					bind:inner={elCriDmg}/>
+		</Col>
+	</Row>
+	<Row>
+		<Col>
+			<StatInput id="eff"
+					shortcut="V"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.eff}
+					bind:inner={elEff}/>
+		</Col>
+		<Col>
+			<StatInput id="res"
+					shortcut="B"
+					bind:isShowShortcut={ isShowShortcut }
+					bind:value={stat.res}
+					bind:inner={elRes}/>
 		</Col>
 		<Col>
 			<Label>점수</Label>

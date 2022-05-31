@@ -13,3 +13,10 @@ export interface Stat {
 	eff: number
     res: number
 }
+
+export interface StatDetail {
+	name: string
+	stat: number
+	maxStat: number
+	reforgeStat: number
+}
