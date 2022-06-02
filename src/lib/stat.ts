@@ -44,27 +44,29 @@ export const StatWeight = <Stat>{
 
 const reforgeStats = {
     default: [0, 1, 3, 4, 5, 7, 8],
-    cri: [0, 1, 2, 3, 4, 5, 6],
-    spd: [0, 0, 1, 2, 3, 4, 5],
-    atk: [0, 11, 18, 24, 30, 38, 47],
-    def: [0, 9, 14, 20, 25, 29, 34],
-    hp: [0, 59, 81, 112, 147, 173, 202],
+    // cri: [0, 1, 2, 3, 4, 5, 6],
+    criDmg: [0, 1, 2, 3, 4, 6, 7],
+    spd: [0, 0, 1, 2, 3, 4, 4],
+    // atk: [0, 11, 18, 24, 30, 38, 47],
+    // def: [0, 9, 14, 20, 25, 29, 34],
+    // hp: [0, 59, 81, 112, 147, 173, 202],
 }
 
 export const getReforgeStats = (stat: string, roll: number) => {
     if (roll > 6 || roll < 0) return 0;
     switch(stat) {
         case 'cri':
+            return roll;
         case 'criDmg':
-            return reforgeStats.cri[roll];
+            return reforgeStats.criDmg[roll];
         case 'spd':
             return reforgeStats.spd[roll];
         case 'atk':
-            return reforgeStats.atk[roll];
+            return roll * 11;
         case 'def':
-            return reforgeStats.def[roll];
+            return roll * 9;
         case 'hp':
-            return reforgeStats.hp[roll];
+            return roll * 56;
         default:
             return reforgeStats.default[roll];
     }
