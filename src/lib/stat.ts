@@ -25,7 +25,7 @@ export const MaxStats = <Stat>{
     def: 34,
     criDmg: 7,
     cri: 5,
-    spd: 5, // 스피드의 편차가 제일 커서 밑에서 계산
+    spd: 4, // Actuall max stat is 5 (low possibility)
 }
 
 export const StatWeight = <Stat>{
@@ -90,3 +90,4 @@ export const getStatName = (stat: string) => {
 }
 
 export const round2decimal = (num: number) => Math.round(num * 100) / 100
+export const round1decimal = (num: number) => Math.round(num * 10) / 10
