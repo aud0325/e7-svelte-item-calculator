@@ -19,4 +19,5 @@ export interface StatDetail {
 	stat: number
 	maxStat: number
 	reforgeStat: number
+	reforgeMaxStat: number
 }

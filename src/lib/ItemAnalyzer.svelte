@@ -34,7 +34,7 @@
         let score = 0;
         let maxScore = 0;
         let reforgeScore = 0;
-        let scoreDetailMessage = '';
+        // let scoreDetailMessage = '';
         let statList:StatDetail[] = [];
 
         Object.keys(stat).forEach((key) => {
@@ -49,11 +49,15 @@
                 maxScore += weight * (maxVal * curRollCnt);
                 reforgeScore += weight * getReforgeStats(key, curRollCnt);
                 console.log(key, 'rollCnt', curRollCnt, 'value', val, 'reforge', getReforgeStats(key, curRollCnt));
+
+                const reforgeMaxVal = maxVal + getReforgeStats(key, 1);
+                const reforgeRollCnt = Math.ceil(val/reforgeMaxVal);
                 statList.push({
                     name: key,
                     stat: val,
                     maxStat: maxVal * curRollCnt,
                     reforgeStat: getReforgeStats(key, curRollCnt),
+                    reforgeMaxStat: reforgeMaxVal * reforgeRollCnt,
                 });
             }
         });
@@ -63,7 +67,7 @@
         }
 
         let rollCntMessage = '';
-        let isGodItem = false;
+        let isGodItem = false;  // Items that bigger than 85 max rolls
         if (rollCnt < 3) {
             return '3개 이상의 옵션을 넣어주세요';
         } else if (rollCnt < 4) {
@@ -75,12 +79,13 @@
             rollCntMessage = '85렙 ' + (modCnt * 3) + '강 전설템 기준';
         } else {
             isGodItem = true;
-            rollCntMessage = '88렙 이상 15강 전설템 기준';
+            rollCntMessage = '90렙 15강 전설템 기준';
         }
         
         const detailMessage = statList.reduce((acc, stat) => {
             const reforgeInfo = `  >>  ${stat.stat + stat.reforgeStat}`;
-            return `${acc}${getStatName(stat.name)} : ${stat.stat}/${stat.maxStat} ${isGodItem ? '' : reforgeInfo}\n`
+            const maxStat = isGodItem ? stat.reforgeMaxStat : stat.maxStat;
+            return `${acc}${getStatName(stat.name)} : ${stat.stat}/${maxStat} ${isGodItem ? '' : reforgeInfo}\n`
         }, '\n스탯 상세\n');
 
         if (isGodItem) {
@@ -91,12 +96,13 @@ ${detailMessage}`;
         }
 
         const message = '점수: ' + round2decimal(score) + ' / 최대점수: ' + round2decimal(maxScore) + ' (' + round2decimal((score/maxScore)*100) + '%)';
-        const reforgeMessage = '재련시 예상점수: ' + round2decimal(score + reforgeScore);
+        const reforgeMessage = '재련 시 예상 점수: ' + round2decimal(score + reforgeScore);
 
         return `${rollCntMessage}
         ${message}
         ${reforgeMessage}
-        ${detailMessage}`;
+        ${detailMessage}
+        ** 최대 강화 수치는 틀릴 수도 있습니다`;
     };
 </script>
 <!-- <Col xs="3">
