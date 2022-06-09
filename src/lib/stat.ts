@@ -20,9 +20,9 @@ export const MaxStats = <Stat>{
     defPer: 8,
     eff: 8,
     res: 8,
-    atk: 28 * 1.67,
-    hp: 90 * 2.25,
-    def: 14 * 2.5,
+    atk: 28 * 1.67, // 46.76
+    hp: 90 * 2.25, // 202.5
+    def: 14 * 2.5, // 35
     criDmg: 7,
     cri: 5,
     spd: 4, // Actuall max stat is 5 (low possibility)

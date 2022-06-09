@@ -20,4 +20,5 @@ export interface StatDetail {
 	maxStat: number
 	reforgeStat: number
 	reforgeMaxStat: number
+	rollCnt: number
 }
