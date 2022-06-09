@@ -92,14 +92,16 @@
         }
 
         if (isInvalid) message = rollCntMessage;
-        else if (isGodItem) {
+        else if (score > 84) {
+            message = '점수가 너무 높습니다, 입력값을 확인해주세요';
+        } else if (isGodItem) {
             message = `${rollCntMessage}
-            점수: ${round2decimal(score)} / 최대점수: 81 (${round2decimal((score/81)*100)}%)
-            (아마도) 갓템일지도`;
+점수: ${round2decimal(score)} / 최대점수: 81 (${round2decimal((score/81)*100)}%)
+(아마도) 갓템일지도`;
         } else  {
             message = `${rollCntMessage}
-            점수: ${round2decimal(score)} / 최대점수: ${round2decimal(maxScore)} (${round2decimal((score/maxScore)*100)}%)
-            재련 시 예상 점수: ${round2decimal(score + reforgeScore)}`
+점수: ${round2decimal(score)} / 최대점수: ${round2decimal(maxScore)} (${round2decimal((score/maxScore)*100)}%)
+재련 시 예상 점수: ${round2decimal(score + reforgeScore)}`
         }
     }
     
@@ -134,20 +136,18 @@
         <thead>
             <tr>
                 <th class="border-end">스탯</th>
-                <th>능력치</th>
-                <th>최대 능력치</th>
-                <th>강화횟수</th>
-                <th class="border-start">재련 후 능력치</th>
+                <th class="border-end">능력치/최대치</th>
+                <th class="border-end">강화횟수</th>
+                <th>재련 후 능력치</th>
             </tr>
         </thead>
         <tbody>
             {#each statList as stat}
             <tr>
                 <td class="border-end">{getStatName(stat.name)}</td>
-                <td>{stat.stat}</td>
-                <td>{isGodItem ? stat.reforgeMaxStat : stat.maxStat}</td>
-                <td>{stat.rollCnt}</td>
-                <td class="border-start">{isGodItem ? '-' : stat.stat + stat.reforgeStat}</td>
+                <td class="border-end">{stat.stat}/{isGodItem ? stat.reforgeMaxStat : stat.maxStat}</td>
+                <td class="border-end">{stat.rollCnt}</td>
+                <td>{isGodItem ? '-' : stat.stat + stat.reforgeStat}</td>
             </tr>
             {/each}
         </tbody>
