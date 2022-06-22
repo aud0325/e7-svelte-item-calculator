@@ -56,7 +56,7 @@ onMount(() => {
 });
 let isCmdPressed = false;
 const handleKeydown = (e: KeyboardEvent) => {
-	if (e.code === 'MetaRight' || e.code === 'ControlLeft ') isCmdPressed = true;
+	if (e.code === 'MetaRight' || e.code === 'ControlLeft') isCmdPressed = true;
 	if (isCmdPressed) return;
 	
 	console.log(e);
@@ -79,7 +79,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 	}
 }
 const handleKeyup = (e: KeyboardEvent) => {
-	if (e.code === 'MetaRight') isCmdPressed = false;
+	if (e.code === 'MetaRight' || e.code === 'ControlLeft') isCmdPressed = false;
 }
 
 $: sum = Object.keys(stat)
@@ -93,7 +93,7 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 
 <svelte:window on:keydown= {handleKeydown} on:keyup= {handleKeyup}/>
 <svelte:head>
-	<title>Turam's e7 calculator</title>
+	<title>에픽세븐 템 점수계산기</title>
 	<meta name="description" content="에픽세븐 템 점수계산기"/>
 </svelte:head>
 
