@@ -1,19 +1,5 @@
 import type { Stat } from "src/type";
 
-const KRStatName:Record<string, string> = {
-    atkPer: '공격력%',
-    hpPer: '생명력%',
-    defPer: '방어력%',
-    eff: '효적',
-    res: '효저',
-    atk: '깡공',
-    hp: '깡생',
-    def: '깡방',
-    criDmg: '치피',
-    cri: '치확',
-    spd: '속도',
-}
-
 export const MaxStats = <Stat>{
     atkPer: 8,
     hpPer: 8,
@@ -83,10 +69,6 @@ export const Upgrade:Record<string, number> = {
     '~8': 3,
     '~12': 4,
     '15+': 5,
-}
-
-export const getStatName = (stat: string) => {
-    return KRStatName[stat];
 }
 
 export const round2decimal = (num: number) => Math.round(num * 100) / 100

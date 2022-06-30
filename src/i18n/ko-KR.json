@@ -1,0 +1,28 @@
+{
+    "title": "에픽세븐 템 점수계산기",
+    "reset": "리셋",
+    "toggleShortcut": "단축키 보기",
+    "score": "점수",
+    "stat": {
+        "atkPer": "공격력%",
+        "hpPer": "생명력%",
+        "defPer": "방어력%",
+        "eff": "효적",
+        "res": "효저",
+        "atk": "깡공",
+        "hp": "깡생",
+        "def": "깡방",
+        "criDmg": "치피",
+        "cri": "치확",
+        "spd": "속도"
+    },
+    "Gear cannot exceed 4 substats": "ERROR 입력된 값이 4개가 넘습니다.",
+    "Gear requires more than 3 substats": "3개 이상의 옵션을 넣어주세요",
+    "Based on 85level +0 Heroic gear": "85레벨 노강 영웅템 기준",
+    "Based on 85level +0 Epic or +3 Heroic gear": "85레벨 노강 전설템 / 3강 영웅템 기준",
+    "Based on 85level +N Epic gear": "85렙 {roll}강 전설템 기준",
+    "Based on 90level +15 Epic gear": "90렙 15강 전설템 기준",
+    "Score is too high. please check the input values": "점수가 너무 높습니다, 입력값을 확인해주세요",
+    "Result": "점수: {score} / 최대점수: {maxScore} ({percent}%)",
+    "Expected reforge result": "재련 시 예상 점수: {score}"
+}

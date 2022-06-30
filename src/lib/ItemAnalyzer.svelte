@@ -1,7 +1,8 @@
 <script lang="ts">
     import { Col, Table, Tooltip } from "sveltestrap";
-    import type { Stat, StatDetail } from "$type/index";
-    import { MaxStats, StatWeight, round2decimal, Rank, Upgrade, getReforgeStats, getStatName } from "./stat";
+    import type { Stat, StatDetail } from "../type/index";
+    import { MaxStats, StatWeight, round2decimal, getReforgeStats, } from "./stat";
+    import { _ } from 'svelte-i18n';
 
     export let stat: Stat;
     // const onStatChanged = (st: Stat) => {
@@ -74,34 +75,33 @@
         
         isGodItem = false;  // Items that bigger than 85 max rolls
         if (modCnt > 4) {
-            rollCntMessage = 'ERROR 입력된 값이 4개가 넘습니다.';
+            rollCntMessage = $_('Gear cannot exceed 4 substats');
             isInvalid = true;
         } else if (rollCnt < 3) {
-            rollCntMessage = '3개 이상의 옵션을 넣어주세요';
+            rollCntMessage = $_('Gear requires more than 3 substats');
             isInvalid = true;
         } else if (rollCnt < 4) {
-            rollCntMessage = '85레벨 노강 영웅템 기준';
+            rollCntMessage = $_('Based on 85level +0 Heroic gear');
         } else if ( rollCnt === 4) {
-            rollCntMessage = '85레벨 노강 전설템 / 3강 영웅템 기준'
+            rollCntMessage = $_('Based on 85level +0 Epic or +3 Heroic gear');
         } else if (rollCnt < 10) {
             const modCnt = rollCnt - 4;
-            rollCntMessage = '85렙 ' + (modCnt * 3) + '강 전설템 기준';
+            rollCntMessage = $_('Based on 85level +N Epic gear', { values: { roll: modCnt * 3 } });
         } else {
             isGodItem = true;
-            rollCntMessage = '90렙 15강 전설템 기준';
+            rollCntMessage = $_('Based on 90level +15 Epic gear');
         }
 
         if (isInvalid) message = rollCntMessage;
         else if (score > 84) {
-            message = '점수가 너무 높습니다, 입력값을 확인해주세요';
+            message = $_('Score is too high. please check the input values');
         } else if (isGodItem) {
-            message = `${rollCntMessage}
-점수: ${round2decimal(score)} / 최대점수: 81 (${round2decimal((score/81)*100)}%)
-(아마도) 갓템일지도`;
+            const resultMessage = $_('Result', { values: { score: round2decimal(score), maxScore: 82, percent: round2decimal((score/82)*100) } });
+            message = `${rollCntMessage}\n${resultMessage}`;
         } else  {
-            message = `${rollCntMessage}
-점수: ${round2decimal(score)} / 최대점수: ${round2decimal(maxScore)} (${round2decimal((score/maxScore)*100)}%)
-재련 시 예상 점수: ${round2decimal(score + reforgeScore)}`
+            const resultMessage = $_('Result', { values: { score: round2decimal(score), maxScore: round2decimal(maxScore), percent: round2decimal((score/maxScore)*100) } });
+            const reforgeExpectMessage = $_('Expected reforge result', { values: { score: round2decimal(score + reforgeScore) } });
+            message = `${rollCntMessage}\n${resultMessage}\n${reforgeExpectMessage}`;
         }
     }
     
@@ -144,7 +144,7 @@
         <tbody>
             {#each statList as stat}
             <tr>
-                <td class="border-end">{getStatName(stat.name)}</td>
+                <td class="border-end">{$_(`stat.${stat.name}`)}</td>
                 <td class="border-end">{stat.stat}/{isGodItem ? stat.reforgeMaxStat : stat.maxStat}</td>
                 <td class="border-end">{stat.rollCnt}</td>
                 <td>{isGodItem ? '-' : stat.stat + stat.reforgeStat}</td>

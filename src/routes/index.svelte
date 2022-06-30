@@ -1,11 +1,15 @@
 <script lang="ts">
 import { onMount, } from "svelte";
 import { Button, Container, Col, Input, Label, Row } from "sveltestrap";
-import Shortcut from "$lib/ShortcutLabel.svelte";
+import Loading from "$lib/Loading.svelte";
 import ItemAnalyzer from "$lib/ItemAnalyzer.svelte";
 import StatInput from "$lib/StatInput.svelte";
-import type { Stat } from "$type/index";
-import { StatWeight, round2decimal, getStatName } from "$lib/stat";
+import type { Stat } from "../type/index";
+import { StatWeight, round2decimal } from "$lib/stat";
+import { _, isLoading, } from 'svelte-i18n';
+import { initI18n } from '../i18n/i18n';
+
+initI18n();
 
 const stat = <Stat>{
 	atkPer: 0,
@@ -89,15 +93,20 @@ $: sum = Object.keys(stat)
 let isShowShortcut = false;
 const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 
+$: title = $isLoading ? 'Epic7 gear score calculator' : $_('title');
 </script>
 
 <svelte:window on:keydown= {handleKeydown} on:keyup= {handleKeyup}/>
 <svelte:head>
-	<title>에픽세븐 템 점수계산기</title>
-	<meta name="description" content="에픽세븐 템 점수계산기"/>
+	<title>{title}</title>
+	<meta name="description" content={title}/>
 </svelte:head>
 
-
+{#if $isLoading}
+<div class="loading-wrapper">
+	<Loading/>
+</div>
+{:else}
 <Container class="text-center">
 	<Row>
 		<Col>
@@ -184,15 +193,27 @@ const toggleShortcut = () => isShowShortcut = !isShowShortcut;
 					bind:inner={elRes}/>
 		</Col>
 		<Col>
-			<Label>점수</Label>
+			<Label>{$_('score')}</Label>
 			<div> { round2decimal(sum) } </div>
 		</Col>
 	</Row>
 	<Row>
-		<Col><Button on:click={ reset }>리셋</Button></Col>
-		<Col><Button on:click={ toggleShortcut }>단축키 보기</Button></Col>
+		<Col><Button on:click={ reset }>{$_('reset')}</Button></Col>
+		<Col><Button on:click={ toggleShortcut }>{$_('toggleShortcut')}</Button></Col>
 	</Row>
 	<Row>
 		<ItemAnalyzer stat={stat}/>
 	</Row>
 </Container>
+
+{/if}
+
+<style>
+	.loading-wrapper {
+		margin: 0;
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+	}
+</style>

@@ -1,0 +1,28 @@
+{
+    "title": "Epic7 gear score calculator",
+    "reset": "reset",
+    "toggleShortcut": "toggle Key Shortcut",
+    "score": "score",
+    "stat": {
+        "atkPer": "Atk%",
+        "hpPer": "Hp%",
+        "defPer": "Def%",
+        "eff": "Eff",
+        "res": "Res",
+        "atk": "Atk",
+        "hp": "Hp",
+        "def": "Def",
+        "criDmg": "Cri Dmg",
+        "cri": "Cri",
+        "spd": "Spd"
+    },
+    "Gear cannot exceed 4 substats": "Gear cannot exceed 4 substats.",
+    "Gear requires more than 3 substats": "Gear requires more than 3 substats",
+    "Based on 85level +0 Heroic gear": "Based on 85level Heroic gear",
+    "Based on 85level +0 Epic or +3 Heroic gear": "Based on 85level +0 Epic or +3 Heroic gear",
+    "Based on 85level +N Epic gear": "Based on 85level +{roll} Epic gear",
+    "Based on 90level +15 Epic gear": "Based on 90level +15 Epic gear",
+    "Score is too high. please check the input values": "Score is too high. please check the input values",
+    "Result": "score: {score} / maxScore: {maxScore} ({percent}%)",
+    "Expected reforge result": "Expected reforged score: {score}"
+}

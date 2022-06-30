@@ -1,7 +1,8 @@
 <script lang="ts">
 import { Input, InputGroup, InputGroupText, Label } from "sveltestrap";
 import Shortcut from "$lib/ShortcutLabel.svelte";
-import { getStatName, round1decimal, StatWeight } from "$lib/stat";
+import { round1decimal, StatWeight } from "$lib/stat";
+import { _ } from 'svelte-i18n';
 
 export let id: string;
 export let value: number;
@@ -17,7 +18,8 @@ const selectOnFocus = (e: FocusEvent) => {
 </script>
 
 <Label for={id}>
-    {getStatName(id)}
+    
+    {$_(`stat.${id}`)}
     <Shortcut value={shortcut} show={ isShowShortcut }/>
 </Label>
 <InputGroup>
