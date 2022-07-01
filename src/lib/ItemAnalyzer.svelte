@@ -135,10 +135,10 @@
     <Table>
         <thead>
             <tr>
-                <th class="border-end">스탯</th>
-                <th class="border-end">능력치/최대치</th>
-                <th class="border-end">강화횟수</th>
-                <th>재련 후 능력치</th>
+                <th class="border-end">{$_('statName')}</th>
+                <th class="border-end">{$_('value/max value')}</th>
+                <th class="border-end">{$_('rollCnt')}</th>
+                <th>{$_('reforgedValue')}</th>
             </tr>
         </thead>
         <tbody>
@@ -152,6 +152,6 @@
             {/each}
         </tbody>
     </Table>
-    ** 강화 횟수 / 최대 능력치는 정확하지 않을 수 있습니다
+    {$_('** Roll count / Max value may not be accurate')}
     {/if}
 </Col>

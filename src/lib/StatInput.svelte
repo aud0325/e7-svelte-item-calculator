@@ -18,7 +18,6 @@ const selectOnFocus = (e: FocusEvent) => {
 </script>
 
 <Label for={id}>
-    
     {$_(`stat.${id}`)}
     <Shortcut value={shortcut} show={ isShowShortcut }/>
 </Label>
