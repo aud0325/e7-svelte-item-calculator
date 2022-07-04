@@ -13,7 +13,7 @@ export const locales: Locale[] =
 
 export const initI18n = () => {
     locales.forEach((localeInfo) => {
-        register(localeInfo.locale, () => import(/* @vite-ignore */`./${localeInfo.locale}.json`));
+        register(localeInfo.locale, () => import(`./locales/${localeInfo.locale}.json`));
     })
     // register('ko', () => import('./ko-KR.json'))
     // register('en', () => import('./en.json'))
