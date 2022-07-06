@@ -49,21 +49,19 @@ const reset = () => {
 }
 
 let keyMap:Record<string, HTMLInputElement | undefined>;
-onMount(() => {
-	keyMap = {
-		KeyQ: elAtkPer,
-		KeyW: elHpPer,
-		KeyE: elDefPer,
-		KeyA: elAtk,
-		KeyS: elHp,
-		KeyD: elDef,
-		KeyZ: elSpd,
-		KeyX: elCri,
-		KeyC: elCriDmg,
-		KeyV: elEff,
-		KeyB: elRes,
-	}
-});
+$:keyMap = {
+	KeyQ: elAtkPer,
+	KeyW: elHpPer,
+	KeyE: elDefPer,
+	KeyA: elAtk,
+	KeyS: elHp,
+	KeyD: elDef,
+	KeyZ: elSpd,
+	KeyX: elCri,
+	KeyC: elCriDmg,
+	KeyV: elEff,
+	KeyB: elRes,
+}
 
 let isCmdPressed = false;
 const handleKeydown = (e: KeyboardEvent) => {
