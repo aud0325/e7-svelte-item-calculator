@@ -29,7 +29,7 @@ jobs:
           destination-github-username: 'aud0325'
           destination-repository-name: 'aud0325.github.io'
           user-email: aud0325@naver.com
-          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          commit-message: ${{ github.event.head_commit.message }} // ORIGIN_COMMIT - $GITHUB_REF
           target-branch: master
           target-directory: e7calc
       - name: Test get variable exported by push-to-another-repository
